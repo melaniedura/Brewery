@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/beerStylesFragment">
+
+    <fragment
+        android:id="@+id/beerStylesFragment"
+        android:name="com.melaniedura.brewery.ui.beerstyles.BeerStylesFragment"
+        android:label="@string/beer_styles_fragment_title"
+        tools:layout="@layout/fragment_beer_styles" >
+        <action
+            android:id="@+id/action_beerStylesFragment_to_beersFragment"
+            app:destination="@id/beersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/beersFragment"
+        android:name="com.melaniedura.brewery.ui.beers.BeersFragment"
+        android:label="{shortName}"
+        tools:layout="@layout/fragment_beers" >
+        <argument
+            android:name="styleId"
+            app:argType="integer" />
+        <argument
+            android:name="shortName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_beersFragment_to_beerDetailsFragment"
+            app:destination="@id/beerDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/beerDetailsFragment"
+        android:name="com.melaniedura.brewery.ui.beerdetails.BeerDetailsFragment"
+        android:label="{name}"
+        tools:layout="@layout/fragment_beer_details" >
+        <argument
+            android:name="beerId"
+            app:argType="string" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
+</navigation>

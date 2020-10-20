@@ -1,0 +1,106 @@
+import dependencies.AnnotationProcessing
+import dependencies.TestDependencies
+import dependencies.Versions
+import dependencies.Application
+import dependencies.Dependencies
+import dependencies.AndroidTestDependencies
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+android {
+    compileSdkVersion Versions.compilesdk
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId Application.id
+        minSdkVersion Versions.minsdk
+        targetSdkVersion Versions.targetsdk
+        versionCode Application.version_code
+        versionName Application.version_name
+
+        buildConfigField("String", "API_KEY", API_KEY)
+
+        testInstrumentationRunner AndroidTestDependencies.instrumentation_runner
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation Dependencies.kotlin_standard_library
+    implementation Dependencies.ktx
+
+    implementation Dependencies.appcompat
+    implementation Dependencies.constraint_layout
+    implementation Dependencies.material
+    implementation Dependencies.lifecycle
+
+    // Hilt
+    implementation Dependencies.hilt_android
+    kapt AnnotationProcessing.hilt_android_compiler
+    implementation Dependencies.hilt_lifecycle_viewmodel
+    kapt AnnotationProcessing.hilt_compiler
+
+    // Coroutines
+    implementation Dependencies.coroutines
+
+    // Retrofit
+    implementation Dependencies.retrofit
+    implementation Dependencies.converter_gson
+    implementation Dependencies.logging_interceptor
+
+    // Glide
+    implementation Dependencies.glide
+    kapt AnnotationProcessing.glide_compiler
+
+    // Navigation
+    implementation Dependencies.navigation_fragment
+    implementation Dependencies.navigation_ktx
+
+    implementation Dependencies.photo_view
+
+    // Room
+    implementation Dependencies.room_runtime
+    kapt AnnotationProcessing.room_compiler
+    implementation Dependencies.room_ktx
+
+    // Test dependencies
+    androidTestImplementation AndroidTestDependencies.junit_test_ext
+    androidTestImplementation AndroidTestDependencies.espresso_core
+    androidTestImplementation AndroidTestDependencies.espresso_contrib
+    androidTestImplementation AndroidTestDependencies.test_runner
+    androidTestImplementation AndroidTestDependencies.test_rules
+    androidTestImplementation AndroidTestDependencies.test_core_ktx
+    androidTestImplementation AndroidTestDependencies.test_ext_truth
+    androidTestImplementation AndroidTestDependencies.truth
+
+    testImplementation TestDependencies.junit
+    testImplementation TestDependencies.mockito_core
+    testImplementation TestDependencies.mockito_inline
+    testImplementation TestDependencies.mockito_kotlin
+    testImplementation TestDependencies.core_testing
+    testImplementation TestDependencies.coroutines_test
+    testImplementation TestDependencies.coroutines_core
+    testImplementation TestDependencies.room_testing
+}

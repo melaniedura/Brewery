@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Brewery</string>
+    <string name="no_results_message">No results</string>
+    <string name="generic_error_message">An error has occurred</string>
+    <string name="beer_styles_fragment_title">Beer Styles</string>
+    <string name="beer_image_content_description">beer image content description</string>
+</resources>
