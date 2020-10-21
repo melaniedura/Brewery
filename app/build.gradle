@@ -78,6 +78,7 @@ dependencies {
     implementation Dependencies.navigation_fragment
     implementation Dependencies.navigation_ktx
 
+    // PhotoView - Zooming ImageView
     implementation Dependencies.photo_view
 
     // Room

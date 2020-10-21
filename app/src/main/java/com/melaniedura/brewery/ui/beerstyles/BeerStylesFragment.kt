@@ -35,7 +35,7 @@ class BeerStylesFragment : Fragment(R.layout.fragment_beer_styles) {
 
         beerStylesRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@BeerStylesFragment.context)
-            beerStylesRecyclerView.adapter = beerStylesAdapter
+            adapter = beerStylesAdapter
         }
     }
 

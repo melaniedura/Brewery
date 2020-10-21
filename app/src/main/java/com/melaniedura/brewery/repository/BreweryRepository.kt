@@ -7,17 +7,17 @@ import com.melaniedura.brewery.model.StyleDomainModel
 import com.melaniedura.brewery.model.toBeerEntity
 import com.melaniedura.brewery.network.ResponseHandler
 import com.melaniedura.brewery.network.model.toDomainModel
-import com.melaniedura.brewery.network.service.BreweryApi
+import com.melaniedura.brewery.network.service.BreweryApiService
 import com.melaniedura.brewery.repository.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class BreweryRepository @Inject constructor(private val breweryApi: BreweryApi, private val beerDao: BeerDao, private val responseHandler: ResponseHandler) {
+class BreweryRepository @Inject constructor(private val breweryApiService: BreweryApiService, private val beerDao: BeerDao, private val responseHandler: ResponseHandler) {
 
     suspend fun getBeerStyles(): Resource<List<StyleDomainModel>> {
         return try {
-            val response = breweryApi.getStyles().data.map { it.toDomainModel() }
+            val response = breweryApiService.getStyles().data.map { it.toDomainModel() }
             responseHandler.handleSuccess(response)
         } catch (e: Exception) {
             responseHandler.handleException(e)
@@ -26,7 +26,7 @@ class BreweryRepository @Inject constructor(private val breweryApi: BreweryApi, 
 
     suspend fun getBeers(styleId: Int): Resource<List<BeerDomainModel>> {
         return try {
-            val response = breweryApi.getBeers(styleId).beers?.map { it.toDomainModel() }
+            val response = breweryApiService.getBeers(styleId).beers?.map { it.toDomainModel() }
             responseHandler.handleSuccess(response)
         } catch (e: Exception) {
             responseHandler.handleException(e)
@@ -38,7 +38,7 @@ class BreweryRepository @Inject constructor(private val breweryApi: BreweryApi, 
             withContext(Dispatchers.IO) {
                 val isInDB = beerDao.isInDB(id)
                 if (!isInDB) {
-                    val response = breweryApi.getBeer(id).beer.toDomainModel()
+                    val response = breweryApiService.getBeer(id).beer.toDomainModel()
                     beerDao.insert(response.toBeerEntity())
                     responseHandler.handleSuccess(response)
                 } else {

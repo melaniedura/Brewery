@@ -6,7 +6,7 @@ import com.melaniedura.brewery.network.response.GetStylesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface BreweryApi {
+interface BreweryApiService {
     @GET("styles")
     suspend fun getStyles(): GetStylesResponse
 

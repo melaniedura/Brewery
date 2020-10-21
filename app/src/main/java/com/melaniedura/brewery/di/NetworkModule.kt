@@ -2,7 +2,7 @@ package com.melaniedura.brewery.di
 
 import com.melaniedura.brewery.network.AuthInterceptor
 import com.melaniedura.brewery.network.ResponseHandler
-import com.melaniedura.brewery.network.service.BreweryApi
+import com.melaniedura.brewery.network.service.BreweryApiService
 import com.melaniedura.brewery.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -39,7 +39,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideBreweryApi(retrofit: Retrofit): BreweryApi = retrofit.create(BreweryApi::class.java)
+    fun provideBreweryApi(retrofit: Retrofit): BreweryApiService = retrofit.create(BreweryApiService::class.java)
 
     @Provides
     fun provideResponseHandler() = ResponseHandler()
