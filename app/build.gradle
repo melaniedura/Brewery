@@ -88,19 +88,10 @@ dependencies {
     // Test dependencies
     androidTestImplementation AndroidTestDependencies.junit_test_ext
     androidTestImplementation AndroidTestDependencies.espresso_core
-    androidTestImplementation AndroidTestDependencies.espresso_contrib
-    androidTestImplementation AndroidTestDependencies.test_runner
-    androidTestImplementation AndroidTestDependencies.test_rules
-    androidTestImplementation AndroidTestDependencies.test_core_ktx
-    androidTestImplementation AndroidTestDependencies.test_ext_truth
-    androidTestImplementation AndroidTestDependencies.truth
 
     testImplementation TestDependencies.junit
-    testImplementation TestDependencies.mockito_core
     testImplementation TestDependencies.mockito_inline
     testImplementation TestDependencies.mockito_kotlin
     testImplementation TestDependencies.core_testing
     testImplementation TestDependencies.coroutines_test
-    testImplementation TestDependencies.coroutines_core
-    testImplementation TestDependencies.room_testing
 }
