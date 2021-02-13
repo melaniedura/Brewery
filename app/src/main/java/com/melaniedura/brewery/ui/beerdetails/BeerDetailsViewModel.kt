@@ -1,6 +1,5 @@
 package com.melaniedura.brewery.ui.beerdetails
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,9 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.melaniedura.brewery.model.BeerDomainModel
 import com.melaniedura.brewery.repository.BreweryRepository
 import com.melaniedura.brewery.repository.util.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BeerDetailsViewModel @ViewModelInject constructor(private val repository: BreweryRepository) : ViewModel() {
+@HiltViewModel
+class BeerDetailsViewModel @Inject constructor(private val repository: BreweryRepository) :
+    ViewModel() {
 
     private val _favorite = MutableLiveData<Boolean>()
     val favorite: LiveData<Boolean> = _favorite
