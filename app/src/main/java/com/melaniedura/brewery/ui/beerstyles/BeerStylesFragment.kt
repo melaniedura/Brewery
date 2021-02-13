@@ -8,14 +8,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.melaniedura.brewery.R
+import com.melaniedura.brewery.databinding.FragmentBeerStylesBinding
 import com.melaniedura.brewery.model.StyleDomainModel
 import com.melaniedura.brewery.repository.util.Status
 import com.melaniedura.brewery.util.toast
+import com.melaniedura.brewery.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_beer_styles.*
 
 @AndroidEntryPoint
 class BeerStylesFragment : Fragment(R.layout.fragment_beer_styles) {
+
+    private val binding by viewBinding(FragmentBeerStylesBinding::bind)
 
     private val viewModel by viewModels<BeerStylesViewModel>()
 
@@ -33,7 +36,7 @@ class BeerStylesFragment : Fragment(R.layout.fragment_beer_styles) {
             navigateToBeersFragment(it)
         }
 
-        beerStylesRecyclerView.apply {
+        binding.beerStylesRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@BeerStylesFragment.context)
             adapter = beerStylesAdapter
         }
@@ -73,14 +76,14 @@ class BeerStylesFragment : Fragment(R.layout.fragment_beer_styles) {
     }
 
     private fun showNoResults() {
-        beerStylesEmptyListText.isVisible = true
+        binding.beerStylesEmptyListText.isVisible = true
     }
 
     private fun showLoading() {
-        beerStylesProgressBar.isVisible = true
+        binding.beerStylesProgressBar.isVisible = true
     }
 
     private fun hideLoading() {
-        beerStylesProgressBar.isVisible = false
+        binding.beerStylesProgressBar.isVisible = false
     }
 }

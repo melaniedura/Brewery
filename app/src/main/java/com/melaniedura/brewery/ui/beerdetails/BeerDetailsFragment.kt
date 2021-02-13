@@ -8,14 +8,17 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.melaniedura.brewery.R
+import com.melaniedura.brewery.databinding.FragmentBeerDetailsBinding
 import com.melaniedura.brewery.model.BeerDomainModel
 import com.melaniedura.brewery.repository.util.Status
 import com.melaniedura.brewery.util.toast
+import com.melaniedura.brewery.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_beer_details.*
 
 @AndroidEntryPoint
 class BeerDetailsFragment : Fragment(R.layout.fragment_beer_details) {
+
+    private val binding by viewBinding(FragmentBeerDetailsBinding::bind)
 
     private val viewModel by viewModels<BeerDetailsViewModel>()
 
@@ -44,11 +47,11 @@ class BeerDetailsFragment : Fragment(R.layout.fragment_beer_details) {
         })
 
         viewModel.favorite.observe(viewLifecycleOwner, {
-            fab.isSelected = it
+            binding.fab.isSelected = it
         })
     }
 
-    private fun loadData(beerDetails: BeerDomainModel?) {
+    private fun loadData(beerDetails: BeerDomainModel?) = with(binding) {
         if (beerDetails != null) {
             Glide.with(requireContext())
                 .load(beerDetails.imageMedium)
@@ -78,14 +81,14 @@ class BeerDetailsFragment : Fragment(R.layout.fragment_beer_details) {
     }
 
     private fun showNoResults() {
-        beerDetailsEmptyText.isVisible = true
+        binding.beerDetailsEmptyText.isVisible = true
     }
 
     private fun showLoading() {
-        beerDetailsProgressBar.isVisible = true
+        binding.beerDetailsProgressBar.isVisible = true
     }
 
     private fun hideLoading() {
-        beerDetailsProgressBar.isVisible = false
+        binding.beerDetailsProgressBar.isVisible = false
     }
 }

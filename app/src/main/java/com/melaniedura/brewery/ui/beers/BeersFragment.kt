@@ -9,14 +9,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.melaniedura.brewery.R
+import com.melaniedura.brewery.databinding.FragmentBeersBinding
 import com.melaniedura.brewery.model.BeerDomainModel
 import com.melaniedura.brewery.repository.util.Status
 import com.melaniedura.brewery.util.toast
+import com.melaniedura.brewery.util.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_beers.*
 
 @AndroidEntryPoint
 class BeersFragment : Fragment(R.layout.fragment_beers) {
+
+    private val binding by viewBinding(FragmentBeersBinding::bind)
 
     private val viewModel by viewModels<BeersViewModel>()
 
@@ -40,7 +43,7 @@ class BeersFragment : Fragment(R.layout.fragment_beers) {
             findNavController().navigate(action)
         }
 
-        beersRecyclerView.apply {
+        binding.beersRecyclerView.apply {
             layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = beersAdapter
         }
@@ -78,14 +81,14 @@ class BeersFragment : Fragment(R.layout.fragment_beers) {
     }
 
     private fun showNoResults() {
-        beersEmptyListText.isVisible = true
+        binding.beersEmptyListText.isVisible = true
     }
 
     private fun showLoading() {
-        beersProgressBar.isVisible = true
+        binding.beersProgressBar.isVisible = true
     }
 
     private fun hideLoading() {
-        beersProgressBar.isVisible = false
+        binding.beersProgressBar.isVisible = false
     }
 }

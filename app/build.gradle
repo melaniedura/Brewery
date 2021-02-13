@@ -7,7 +7,6 @@ import dependencies.AndroidTestDependencies
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: "androidx.navigation.safeargs.kotlin"
@@ -43,6 +42,10 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -54,7 +57,11 @@ dependencies {
     implementation Dependencies.appcompat
     implementation Dependencies.constraint_layout
     implementation Dependencies.material
-    implementation Dependencies.lifecycle
+    implementation Dependencies.lifecycle_livedata
+    implementation Dependencies.lifecycle_runtime
+    implementation Dependencies.lifecycle_common_java8
+    implementation Dependencies.lifecycle_viewmodel
+
 
     // Hilt
     implementation Dependencies.hilt_android

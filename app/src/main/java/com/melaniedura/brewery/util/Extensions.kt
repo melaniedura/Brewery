@@ -1,21 +1,74 @@
 package com.melaniedura.brewery.util
 
 import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.viewbinding.ViewBinding
+import kotlin.properties.ReadOnlyProperty
+import kotlin.reflect.KProperty
 
 fun Context.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
 }
 
-fun Context.toast(@StringRes resId: Int, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(this, this.resources.getText(resId), duration).show()
+class FragmentViewBindingDelegate<T : ViewBinding>(
+    val fragment: Fragment,
+    val viewBindingFactory: (View) -> T
+) : ReadOnlyProperty<Fragment, T> {
+    private var binding: T? = null
+
+    init {
+        fragment.lifecycle.addObserver(object : DefaultLifecycleObserver {
+            val viewLifecycleOwnerLiveDataObserver =
+                Observer<LifecycleOwner?> { viewLifecycleOwner ->
+                    viewLifecycleOwner?.lifecycle?.addObserver(object : DefaultLifecycleObserver {
+                        override fun onDestroy(owner: LifecycleOwner) {
+                            binding = null
+                        }
+                    })
+                }
+
+            override fun onCreate(owner: LifecycleOwner) {
+                fragment.viewLifecycleOwnerLiveData.observeForever(
+                    viewLifecycleOwnerLiveDataObserver
+                )
+            }
+
+            override fun onDestroy(owner: LifecycleOwner) {
+                fragment.viewLifecycleOwnerLiveData.removeObserver(
+                    viewLifecycleOwnerLiveDataObserver
+                )
+            }
+        })
+    }
+
+    override fun getValue(thisRef: Fragment, property: KProperty<*>): T {
+        val binding = binding
+        if (binding != null) {
+            return binding
+        }
+
+        val lifecycle = fragment.viewLifecycleOwner.lifecycle
+        if (!lifecycle.currentState.isAtLeast(Lifecycle.State.INITIALIZED)) {
+            throw IllegalStateException("Should not attempt to get bindings when Fragment views are destroyed.")
+        }
+
+        return viewBindingFactory(thisRef.requireView()).also { this.binding = it }
+    }
 }
 
-fun Context.longToast(message: String, duration: Int = Toast.LENGTH_LONG) {
-    Toast.makeText(this, message, duration).show()
-}
+fun <T : ViewBinding> Fragment.viewBinding(viewBindingFactory: (View) -> T) =
+    FragmentViewBindingDelegate(this, viewBindingFactory)
 
-fun Context.longToast(@StringRes resId: Int, duration: Int = Toast.LENGTH_LONG) {
-    Toast.makeText(this, this.resources.getText(resId), duration).show()
-}
+inline fun <T : ViewBinding> viewBinding(
+    parent: ViewGroup,
+    crossinline bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> T
+) =
+    bindingInflater.invoke(LayoutInflater.from(parent.context), parent, false)

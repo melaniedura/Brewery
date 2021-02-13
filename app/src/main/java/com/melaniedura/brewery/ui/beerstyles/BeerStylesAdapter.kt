@@ -1,31 +1,32 @@
 package com.melaniedura.brewery.ui.beerstyles
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.melaniedura.brewery.R
+import com.melaniedura.brewery.databinding.ItemBeerStyleBinding
 import com.melaniedura.brewery.model.StyleDomainModel
-import kotlinx.android.synthetic.main.item_beer_style.view.*
+import com.melaniedura.brewery.util.viewBinding
 
 class BeerStylesAdapter(private val listener: (StyleDomainModel) -> Unit) : ListAdapter<StyleDomainModel, BeerStylesAdapter.BeerStyleViewHolder>(
     BeerStyleDiffCallback()
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        BeerStyleViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_beer_style, parent, false))
+        BeerStyleViewHolder(viewBinding(parent, ItemBeerStyleBinding::inflate))
+
 
     override fun onBindViewHolder(holder: BeerStyleViewHolder, position: Int) {
         holder.bind(getItem(position), listener)
     }
 
-    class BeerStyleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(stylesData: StyleDomainModel, listener: (StyleDomainModel) -> Unit) {
-            itemView.beerStyleText.text = stylesData.name
-            itemView.setOnClickListener { listener(stylesData) }
-        }
+    class BeerStyleViewHolder(private val binding: ItemBeerStyleBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(stylesData: StyleDomainModel, listener: (StyleDomainModel) -> Unit) =
+            with(binding) {
+                beerStyleText.text = stylesData.name
+                root.setOnClickListener { listener(stylesData) }
+            }
     }
 }
 
