@@ -3,7 +3,7 @@ package dependencies
 object Versions {
     const val gradle = "4.1.2"
     const val compilesdk = 30
-    const val minsdk = 21
+    const val minsdk = 23
     const val targetsdk = 30
     const val kotlin = "1.4.21"
     const val room = "2.2.6"
@@ -27,4 +27,5 @@ object Versions {
     const val mockito_inline = "3.1.0"
     const val mockito_kotlin = "2.2.0"
     const val core_testing = "2.1.0"
+    const val compose = "1.0.0-alpha12"
 }

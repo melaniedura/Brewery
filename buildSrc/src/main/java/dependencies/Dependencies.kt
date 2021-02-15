@@ -28,4 +28,15 @@ object Dependencies {
         "androidx.lifecycle:lifecycle-common-java8:${Versions.lifecycle_version}"
     const val lifecycle_viewmodel =
         "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle_version}"
+    const val compose_runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
+    const val compose_ui = "androidx.compose.ui:ui:${Versions.compose}"
+    const val compose_foundation = "androidx.compose.foundation:foundation:${Versions.compose}"
+    const val compose_foundation_layout =
+        "androidx.compose.foundation:foundation-layout:${Versions.compose}"
+    const val compose_material = "androidx.compose.material:material:${Versions.compose}"
+    const val compose_runtime_livedata =
+        "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
+    const val compose_ui_tooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
+    const val compose_material_theme_adapter =
+        "com.google.android.material:compose-theme-adapter:${Versions.compose}"
 }

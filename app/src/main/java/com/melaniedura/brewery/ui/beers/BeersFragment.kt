@@ -52,15 +52,9 @@ class BeersFragment : Fragment(R.layout.fragment_beers) {
     private fun subscribeToObservers() {
         viewModel.beers.observe(viewLifecycleOwner, { resource ->
             when (resource.status) {
-                Status.SUCCESS -> {
-                    setBeersData(resource.data)
-                }
-                Status.ERROR -> {
-                    showError(resource.message)
-                }
-                Status.LOADING -> {
-                    showLoading()
-                }
+                Status.SUCCESS -> setBeersData(resource.data)
+                Status.ERROR -> showError(resource.message)
+                Status.LOADING -> showLoading()
             }
         })
     }

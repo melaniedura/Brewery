@@ -41,10 +41,17 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+        useIR = true
     }
 
     buildFeatures {
         viewBinding true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion Versions.kotlin
+        kotlinCompilerExtensionVersion Versions.compose
     }
 }
 
@@ -61,7 +68,6 @@ dependencies {
     implementation Dependencies.lifecycle_runtime
     implementation Dependencies.lifecycle_common_java8
     implementation Dependencies.lifecycle_viewmodel
-
 
     // Hilt
     implementation Dependencies.hilt_android
@@ -92,6 +98,16 @@ dependencies {
     implementation Dependencies.room_runtime
     kapt AnnotationProcessing.room_compiler
     implementation Dependencies.room_ktx
+
+    // Compose
+    implementation Dependencies.compose_runtime
+    implementation Dependencies.compose_ui
+    implementation Dependencies.compose_foundation
+    implementation Dependencies.compose_foundation_layout
+    implementation Dependencies.compose_material
+    implementation Dependencies.compose_runtime_livedata
+    implementation Dependencies.compose_ui_tooling
+    implementation Dependencies.compose_material_theme_adapter
 
     // Test dependencies
     androidTestImplementation AndroidTestDependencies.junit_test_ext
