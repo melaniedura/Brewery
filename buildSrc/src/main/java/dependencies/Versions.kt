@@ -1,11 +1,11 @@
 package dependencies
 
 object Versions {
-    const val gradle = "4.1.2"
+    const val gradle = "7.0.0-alpha06"
     const val compilesdk = 30
     const val minsdk = 23
     const val targetsdk = 30
-    const val kotlin = "1.4.21"
+    const val kotlin = "1.4.30"
     const val room = "2.2.6"
     const val appcompat = "1.2.0"
     const val ktx = "1.3.2"
