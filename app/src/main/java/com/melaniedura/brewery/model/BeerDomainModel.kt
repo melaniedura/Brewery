@@ -5,7 +5,7 @@ import com.melaniedura.brewery.database.BeerEntity
 data class BeerDomainModel(
     val id: String,
     val name: String,
-    val description: String?,
+    val description: String = "",
     val nameDisplay: String?,
     val year: Int?,
     val imageSmall: String?,

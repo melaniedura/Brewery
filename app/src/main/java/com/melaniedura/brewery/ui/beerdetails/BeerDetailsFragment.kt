@@ -2,6 +2,7 @@ package com.melaniedura.brewery.ui.beerdetails
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.material.MaterialTheme
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,6 +27,12 @@ class BeerDetailsFragment : Fragment(R.layout.fragment_beer_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.composeView.setContent {
+            MaterialTheme {
+                BeerDetailsDescription(viewModel)
+            }
+        }
 
         subscribeToObservers()
         viewModel.getBeer(args.beerId)
@@ -55,7 +62,6 @@ class BeerDetailsFragment : Fragment(R.layout.fragment_beer_details) {
                 .into(beerDetailsImage)
 
             beerDetailsName.text = beerDetails.name
-            beerDetailsDescription.text = beerDetails.description
 
             fab.isSelected = beerDetails.isFavourite
 

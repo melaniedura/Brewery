@@ -23,7 +23,7 @@ fun BeerDataModel.toDomainModel(): BeerDomainModel {
         id = this.id,
         name = this.name,
         nameDisplay = this.nameDisplay,
-        description = this.description,
+        description = this.description ?: "",
         year = this.year,
         imageSmall = this.labels?.icon ?: "",
         imageMedium = this.labels?.medium ?: "",

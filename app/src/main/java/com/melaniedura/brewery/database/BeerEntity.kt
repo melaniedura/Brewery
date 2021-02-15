@@ -18,7 +18,7 @@ data class BeerEntity(
 )
 
 fun BeerEntity.toDomainModel() = BeerDomainModel(
-    description = this.description,
+    description = this.description ?: "",
     id = this.id,
     name = this.name,
     nameDisplay = this.nameDisplay,
