@@ -6,14 +6,14 @@ import androidx.room.*
 interface BeerDao {
 
     @Query("SELECT EXISTS (SELECT 1 FROM BeerEntity WHERE id = :id)")
-    fun isInDB(id: String): Boolean
+    suspend fun isInDB(id: String): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(beer: BeerEntity)
 
     @Query("SELECT * FROM BeerEntity WHERE id = :beerId")
-    fun get(beerId: String): BeerEntity
+    suspend fun get(beerId: String): BeerEntity
 
     @Update
-    fun update(beer: BeerEntity)
+    suspend fun update(beer: BeerEntity)
 }

@@ -9,8 +9,6 @@ import com.melaniedura.brewery.network.ResponseHandler
 import com.melaniedura.brewery.network.model.toDomainModel
 import com.melaniedura.brewery.network.service.BreweryApiService
 import com.melaniedura.brewery.repository.util.Resource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class BreweryRepository @Inject constructor(private val breweryApiService: BreweryApiService, private val beerDao: BeerDao, private val responseHandler: ResponseHandler) {
@@ -35,16 +33,14 @@ class BreweryRepository @Inject constructor(private val breweryApiService: Brewe
 
     suspend fun getBeer(id: String): Resource<BeerDomainModel> {
         return try {
-            withContext(Dispatchers.IO) {
-                val isInDB = beerDao.isInDB(id)
-                if (!isInDB) {
-                    val response = breweryApiService.getBeer(id).beer.toDomainModel()
-                    beerDao.insert(response.toBeerEntity())
-                    responseHandler.handleSuccess(response)
-                } else {
-                    val beer = beerDao.get(id).toDomainModel()
-                    responseHandler.handleSuccess(beer)
-                }
+            val isInDB = beerDao.isInDB(id)
+            if (!isInDB) {
+                val response = breweryApiService.getBeer(id).beer.toDomainModel()
+                beerDao.insert(response.toBeerEntity())
+                responseHandler.handleSuccess(response)
+            } else {
+                val beer = beerDao.get(id).toDomainModel()
+                responseHandler.handleSuccess(beer)
             }
         } catch (e: Exception) {
             responseHandler.handleException(e)
@@ -52,9 +48,7 @@ class BreweryRepository @Inject constructor(private val breweryApiService: Brewe
     }
 
     suspend fun updateBeer(beer: BeerDomainModel): Resource<BeerDomainModel> {
-        withContext(Dispatchers.IO) {
-            responseHandler.handleSuccess(beerDao.update(beer.toBeerEntity()))
-        }
+        responseHandler.handleSuccess(beerDao.update(beer.toBeerEntity()))
         return responseHandler.handleSuccess(beer)
     }
 }
