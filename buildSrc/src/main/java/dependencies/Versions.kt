@@ -27,5 +27,5 @@ object Versions {
     const val mockito_inline = "3.1.0"
     const val mockito_kotlin = "2.2.0"
     const val core_testing = "2.1.0"
-    const val compose = "1.0.0-alpha12"
+    const val compose = "1.0.0-beta01"
 }
