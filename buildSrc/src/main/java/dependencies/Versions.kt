@@ -1,7 +1,7 @@
 package dependencies
 
 object Versions {
-    const val gradle = "7.0.0-alpha06"
+    const val gradle = "7.0.0-alpha08"
     const val compilesdk = 30
     const val minsdk = 23
     const val targetsdk = 30
